@@ -1,0 +1,20 @@
+#displayscreen {
+background-color: #000000;
+color: wheat;
+} 
+
+#buttoncontainer {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+grid-template-rows: repeat(4, 1fr);
+gap: 20px;
+background-color: aqua; 
+padding: 10px;
+
+}
+
+#buttonitems {
+    background-color: rgb(0, 47, 255);
+
+} 
+
