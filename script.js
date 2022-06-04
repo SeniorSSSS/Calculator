@@ -1,5 +1,3 @@
-
-
 // Added to select screen area in html and then add the display screen div to it
 const calculatorscreen = document.querySelector("calculatorscreen");
 const displayscreennode = document.createElement('div');
@@ -20,49 +18,75 @@ var calcNumber = {
     secondNumber: [],
 }
 var operation = '';
-var pastCalculationNumber;
 var firstMathNumber;
 var secondMathNumber;
+var pastCalculationNumber = 0;
+
+
 
 
 function mainCalculator(event) {
     if (["7", "8", "9", "4", "5", "6", "1", "2", "3", "0"].includes(event.target.innerText)) {
-        displayscreennode.innerText = event.target.innerText;
-        if (operation != '') {
-            displayscreennode.innerText = (calcNumber['firstNumber'] + operation +calcNumber['secondNumber']);
-            calcNumber['secondNumber'].push(event.target.innerText);
-            secondMathNumber = calcNumber['secondNumber'].join('');
-            displayscreennode.innerText = (firstMathNumber + operation +secondMathNumber);
-        }
-        else {
-            calcNumber['firstNumber'].push(event.target.innerText);
-            firstMathNumber = calcNumber['firstNumber'].join('');
-            displayscreennode.innerText = firstMathNumber;
+        {//sets 2nd # if operationnotpres by adding the clickedbutton value to the array2ndnum
+            if (operation != '') {
+                calcNumber['secondNumber'].push(event.target.innerText);
+                secondMathNumber = calcNumber['secondNumber'].join('');
+                displayscreennode.innerText = (firstMathNumber + operation + secondMathNumber);
+                console.log('secondclick');
+                //when pastcalc there it does this after the second#clicked
+                if (pastCalculationNumber != '') {
+                    firstMathNumber = Number(pastCalculationNumber);
+                    secondMathNumber = Number(event.target.innerText);
+                    displayscreennode.innerText = operate(firstMathNumber, secondMathNumber, operation);
+                    pastCalculationNumber = operate(firstMathNumber, secondMathNumber, operation);
+                    console.log('finalcalwhencalcthere');
+                }
+            }
+            // if oper wasnt present this means it the 1st click and so it sets that
+            else {
+                calcNumber['firstNumber'].push(event.target.innerText);
+                firstMathNumber = calcNumber['firstNumber'].join('');
+                displayscreennode.innerText = firstMathNumber;
+                console.log('firstclick');
+            }
         }
     }
     else if (['-', "/", "+", "-", "*"].includes(event.target.innerText)) {
-        operation =event.target.innerText;
+        operation = event.target.innerText;
         console.log(operation + 'isoperation');
+        if (pastCalculationNumber != '') {
+            firstMathNumber = pastCalculationNumber;
+        } else {
+            console.log(firstMathNumber + 'fmn');
+            console.log(secondMathNumber + 'smn');
+            console.log(pastCalculationNumber + "pmn");
+        }
         return operation;
     }
-    else if (event.target.innerText == '=') {
+    else if (event.target.innerText == '=' || ["7", "8", "9", "4", "5", "6", "1", "2", "3", "0"].includes(event.target.innerText)) {
+        //does the initial calc when no other result there
         firstMathNumber = Number(firstMathNumber);
         secondMathNumber = Number(secondMathNumber);
-        console.log(operation + 'whyy');
-        displayscreennode.innerText = operate(firstMathNumber,secondMathNumber, operation);
-    }
-    else if (event.target.innerText = 'clear') {
+        displayscreennode.innerText = operate(firstMathNumber, secondMathNumber, operation);
+        pastCalculationNumber = operate(firstMathNumber, secondMathNumber, operation);
+        console.log('finalcalcnootheranwser');
+        console.log(firstMathNumber);
+        console.log(secondMathNumber);
+        console.log(pastCalculationNumber);
+        }
+    //goesherewhenclearclicked or dot
+    else  {
         displayscreennode.innerText = event.target.innerText;
         calcNumber['firstNumber'].length = 0;
         calcNumber['secondNumber'].length = 0;
         operation = '';
         console.log('clear');
         displayscreennode.innerText = 'Enter Some #\'s';
-        
-    } else {
-      alert ('happytime');
+        pastCalculationNumber = 0;
+
+    } 
 }
-}
+
 
 function add(firstNumber, secondNumber) {
     return firstNumber + secondNumber;
