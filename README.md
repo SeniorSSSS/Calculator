@@ -1,2 +1,2 @@
 # Calculator
-Kinda wanted to skip this project since I 
+Kinda wanted to skip this project initially . it took me longer than grid but I learned a lot for arrays was worth doing it. it could use some fixes like adding round number feature but i want to move on. done over 2 or 3 days could have done it in one of proper work though. chose to not do extra credit.
