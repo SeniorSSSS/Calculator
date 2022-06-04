@@ -1,74 +1,97 @@
-// This is to select the element in the dom used in the loop to make the buttons
-const buttonContainer = document.querySelector("#buttoncontainer");
 
-//This is used to make the buttons and then add the symbol for each button.
-for (var i = 0; i < 16; i++) {
-    const buttonitemnode = document.createElement('button');
-    buttonitemnode.id = "buttonitems";
-    buttonContainer.appendChild(buttonitemnode);
-    if (i === 0) {
-        buttonitemnode.innerText = "7";
-        console.log(buttonitemnode);
-        continue;
+
+// Added to select screen area in html and then add the display screen div to it
+const calculatorscreen = document.querySelector("calculatorscreen");
+const displayscreennode = document.createElement('div');
+displayscreennode.id = "displayscreen";
+calculatorscreen.appendChild(displayscreennode);
+displayscreennode.innerText = "holdertexttilcalcsmade";
+
+// LOok for buttons in html so i can work on them
+const buttonnode = document.querySelectorAll('button');
+const buttonnodearray = Array.from(buttonnode);
+for (var i = 0; i < buttonnodearray.length; i++) {
+    buttonnodearray[i].addEventListener('click', mainCalculator);
+}
+
+// State variables
+var calcNumber = {
+    firstNumber: '',
+    secondNumber: '',
+}
+var operation = '';
+var pastCalculationNumber;
+
+
+function mainCalculator(event) {
+    if (["7", "8", "9", "4", "5", "6", "1", "2", "3", "0"].includes(event.target.innerText)) {
+        displayscreennode.innerText = event.target.innerText;
+        if (operation != '') {
+            calcNumber['secondNumber'] = event.target.innerText;
+            displayscreennode.innerText = (calcNumber['firstNumber'] + operation +calcNumber['secondNumber'])
+        }
+        else {
+            calcNumber['firstNumber'] = event.target.innerText;
+            displayscreennode.innerText = (calcNumber['firstNumber'] + operation +calcNumber['secondNumber'])
+        }
+        console.log(event.target.innerText);
+        console.table(calcNumber);
     }
-    else if (i === 1){
-        buttonitemnode.textContent = "8";
-        continue;
+    else if (['-', "/", "+", "-", "*"].includes(event.target.innerText)) {
+        operation =event.target.innerText;
+        console.log(operation + 'isoperation');
+        // "'" + event.target.innerText + "'"
+        return operation;
     }
-    else if (i === 2) {
-        buttonitemnode.innerText = "9";
-        continue;
-    }
-    else if (i === 3) {
-        buttonitemnode.innerText = "➗";
-        continue;
-    }
-    else if (i === 4) {
-        buttonitemnode.innerText = "4";
-        continue;
-    }
-    else if (i === 5) {
-        buttonitemnode.innerText = "5";
-        continue;
-    }
-    else if (i === 6) {
-        buttonitemnode.innerText = "6";
-        continue;
-    }
-    else if (i === 7) {
-        buttonitemnode.innerText = "x";
-        continue;
-    }
-    else if (i === 8) {
-        buttonitemnode.innerText = "1";
-        continue;
-    }
-    else if (i === 9) {
-        buttonitemnode.innerText = "2";
-        continue;
-    }
-    else if (i === 10) {
-        buttonitemnode.innerText = "3";
-        continue;
-    }
-    else if (i === 11) {
-        buttonitemnode.innerText = "-";
-        continue;
-    }
-    else if (i === 12) {
-        buttonitemnode.innerText = "0";
-        continue;
-    }
-    else if (i === 13) {
-        buttonitemnode.innerText = "•";
-        continue;
-    }
-    else if (i === 14) {
-        buttonitemnode.innerText = "+";
-        continue;
+    else if (event.target.innerText = '=') {
+        firstNumber = Number(calcNumber.firstNumber);
+        secondNumber = Number(calcNumber.secondNumber);
+        console.log(operation);
+        //operation = '-';
+        console.log(firstNumber + 'fin');
+        console.log(secondNumber + 'sn');
+        console.log(operation);
+        console.log(operate(firstNumber,secondNumber, operation));
+        displayscreennode.innerText = operate(firstNumber,secondNumber, operation);
     }
     else {
-        buttonitemnode.innerText = "=";
-        continue;
+        displayscreennode.innerText = event.target.innerText;
+        calcNumber['firstNumber']= '';
+        calcNumber['secondNumber'] = '';
+        operation = '';
+        console.log('clear');
+    }
+
+}
+
+
+function add(firstNumber, secondNumber) {
+    return firstNumber + secondNumber;
+}
+function subtract(firstNumber, secondNumber) {
+    return firstNumber - secondNumber;
+}
+
+function multiply(firstNumber, secondNumber) {
+    return firstNumber * secondNumber;
+}
+
+function divide(firstNumber, secondNumber) {
+    return secondNumber === 0 ? "Can't divide by 0!" : firstNumber / secondNumber;;
+}
+
+function operate(firstNumber, secondNumber, operation) {
+    switch (operation) {
+        case '+':
+            return add(firstNumber, secondNumber);
+        case '-':
+            return subtract(firstNumber, secondNumber);
+        case '*':
+            return multiply(firstNumber, secondNumber);
+        case '/': {
+            return divide(firstNumber, secondNumber);
+        }
     }
 }
+
+

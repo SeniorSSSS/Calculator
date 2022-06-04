@@ -1,20 +1,26 @@
-#displayscreen {
-background-color: #000000;
-color: wheat;
-} 
 
+#displayscreen {
+background-color: #28036d;
+color: rgb(138, 246, 165);
+text-align: center;
+
+} 
 #buttoncontainer {
 display: grid;
 grid-template-columns: repeat(4, 1fr);
-grid-template-rows: repeat(4, 1fr);
+grid-template-rows: repeat(5, 1fr);
 gap: 20px;
-background-color: aqua; 
+background-color: purple;
 padding: 10px;
-
 }
-
-#buttonitems {
+#buttoncontainer > div {
     background-color: rgb(0, 47, 255);
-
 } 
+
+#buttonitemclear {
+    background-color: rgb(0, 255, 21);
+    grid-column-start: 4;
+    border: 2px solid blueviolet;
+  
+}
 
